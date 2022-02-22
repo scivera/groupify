@@ -34,10 +34,10 @@ module Groupify
         return unless members.present?
 
         members.each do |member|
-          member.group_ids << self.id
+          member.groups << self
           membership = member.group_memberships.find_or_initialize_by(as: membership_type)
           member.save(validate: false)
-          membership.group_ids << self.id
+          membership.groups << self
           membership.save(validate: false)
         end
       end

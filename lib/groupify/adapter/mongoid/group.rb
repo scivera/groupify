@@ -36,9 +36,10 @@ module Groupify
         members.each do |member|
           member.groups << self
           membership = member.group_memberships.find_or_initialize_by(as: membership_type)
+          member.skip_callbacks = true if member.respond_to?(:skip_callbacks)
           member.save(validate: false)
           membership.groups << self
-          membership.save(validate: false)
+          membership.save!
         end
       end
 
